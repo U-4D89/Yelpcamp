@@ -1,0 +1,57 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img class="card-img-top" src="https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80" alt="log in image">
+                <br>
+                <h5 class="card-title" style=" padding-left: 1rem; "> Register </h5>
+                <div class="card-body">
+                    <form action="/register" class="row g-3 needs-validation" novalidate method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input class="form-control" type="text" id="username" name="username" required autofocus>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                    
+                            <div id="validationUserFeedback" class="invalid-feedback">
+                              *Please provide a username.
+                            </div>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email </label>
+                            <input class="form-control" type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                    
+                            <div id="validationemailFeedback" class="invalid-feedback">
+                                *Please provide a valid email, remember follow this order:
+                                 yourname@yourmail.*** (three or two characters)
+                            </div>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password </label>
+                            <input class="form-control" type="password" id="password" name="password" pattern=".{7,}" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                    
+                            <div id="validationemailFeedback" class="invalid-feedback">
+                                *Please provide a valid password, must conatain seven(7) or more characters.
+                            </div>
+                        </div>
+                    
+                        <button class="btn btn-dark btn-block">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

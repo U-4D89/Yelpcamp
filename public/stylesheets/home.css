@@ -1,0 +1,36 @@
+body { 
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url(https://media.istockphoto.com/photos/shot-of-a-cute-vintage-teapot-in-a-campsite-near-to-lake-picture-id1305448692?k=20&m=1305448692&s=612x612&w=0&h=KrfqnO25EO5TuZ0OqUDq95fcJ1FxgTJKFO15tBxNPsU=);
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+    height: 100vh; 
+    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+}
+
+.cover-container { max-width: 60vw; }
+
+.nav-link {
+
+    border-bottom: 0.25rem solid transparent;
+    color: rgba( 255, 255, 255, 0.5 );
+    font-weight: 450;
+    margin-left: 1rem;
+    padding: 0.25rem 0;
+
+}
+
+.nav-link:hover{ 
+    border-bottom-color: rgba( 255, 255, 255, 0.5 ); 
+    color: rgba( 255, 255, 255, 0.5 );
+}
+
+.nav-link:active{ 
+    color: white;
+    border-bottom-color: white ;
+ }
+
+.btn-secondary, .btn-secondary:hover { 
+    color: #333 !important;
+    text-shadow: none;
+ }
