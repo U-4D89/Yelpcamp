@@ -23,8 +23,7 @@ const reviewsRoutes = require('./routes/reviews');
 
 //connecting with yelp-camp db
 const MongoDBStore = require('connect-mongo')(session);
-const databaseAtlas = process.env.DB_URL;
-const databaseLocal = 'mongodb://localhost:27017/yelp-camp';
+const databaseLocal = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 
 mongoose.connect(databaseLocal, {
     useNewUrlParser: true,
@@ -55,14 +54,11 @@ app.use(mongoSanitize({
 }));
 
 
-const secret = 'thisshouldbeabettersecret!';
-// app.use(session({
-//     secret: secret,
-//     store: MongoStore.create({ mongoUrl: databaseLocal })
-// }))
+const secret = process.env.SECRET || 'thisshouldbeabettersecret';
+
 const store = new MongoDBStore ({
     url: databaseLocal,
-    secret:'thisshouldbeabettersecret!',
+    secret,
     touchAfter: 24 * 60  * 60 //lazy udpate hours * minutes * seconds
 
 });
@@ -148,7 +144,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.use( ( request, response, next ) => {
     console.log(request.session)
     response.locals.currentUser = request.user;
@@ -158,7 +153,7 @@ app.use( ( request, response, next ) => {
 })
 
 
-//          R O U T E S
+//        R O U T E S
 app.use('/', userRoutes);
 app.use('/campgrounds', campgroundsRoutes);
 app.use('/campgrounds/:id/reviews', reviewsRoutes);
