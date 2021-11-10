@@ -1,32 +1,77 @@
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-const express = require('express');
-const app = express();
-const port = process.argv[2];
-const ExpressError = require('./utils/ExpressError');
 
-//all required routes
+const port = process.argv[2];
+
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
+const session = require('express-session');
+const flash = require('connect-flash');
+const ExpressError = require('./utils/ExpressError');
+const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const userRoutes = require('./routes/users');
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
-const userRoutes = require('./routes/users');
 
+//connecting with yelp-camp db
+const MongoDBStore = require("connect-mongo") (session);
+const databaseAtlas = process.env.DB_URL;
+const databaseLocal = 'mongodb://localhost:27017/yelp-camp';
 
-//forces put and delete methods
-const methodOverride =  require('method-override');
-app.use(methodOverride('_method'));
+mongoose.connect(databaseLocal, {
+    useNewUrlParser: true,
+    // useCreateIndex: true,
+    // useUnifiedTipology: true
+});
 
+//handling errors from db
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+    console.log('Database connected!!!');
+});
 
-//for add some js code on html
-const ejsMate = require('ejs-mate');
+const app = express();
+
 app.engine('ejs', ejsMate); 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+
+app.use(express.urlencoded({ extended:true }));
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+//prevent mongo injection
+app.use(mongoSanitize({
+    replaceWith: '_'
+}));
 
 
-//session
-const session = require('express-session');
+const secret = 'thisshouldbeabettersecret!';
+const store = new MongoDBStore({
+    url:databaseLocal,
+    secret:'thisshouldbeabettersecret!',
+    touchAfter: 24 * 60  * 60 //lazy udpate hours * minutes * seconds
+
+});
+
+store.on('error', function (e) {
+    console.log('error store', e)
+});
+
+
 const sessionConfig = {
-    name: 'uwu',
-    secret: 'thisshouldbeabettersecret!',
+    store,
+    name: 'uwusessionuwu',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -37,23 +82,11 @@ const sessionConfig = {
     }
 
 }
+
 app.use(session(sessionConfig));
+app.use(flash());
+app.use(helmet());
 
-
-//passport authentification 
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/user');
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
-//helmet 
-//Content Security Policy to prevent XSS
-const helmet = require('helmet');
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com",
@@ -103,16 +136,15 @@ app.use(
 );
 
 
-//for prevent mongo injection
-const mongoSanitize = require('express-mongo-sanitize')
-app.use(mongoSanitize({
-    replaceWith: '_'
-}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
-//flash messages, define types of messages
-const flash = require('connect-flash');
-app.use(flash());
 app.use( ( request, response, next ) => {
     console.log(request.session)
     response.locals.currentUser = request.user;
@@ -122,36 +154,11 @@ app.use( ( request, response, next ) => {
 })
 
 
-//paths for use in every place the folders views and public
-const path = require('path');
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '/views'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended:true }));
-
-
-//connecting with yelp-camp db
-const mongoose = require('mongoose');
-//const databaseAtlas = process.env.DB_URL;
-const databaseLocal = 'mongodb://localhost:27017/yelp-camp'
-mongoose.connect(databaseLocal, {
-    useNewUrlParser: true,
-    // useCreateIndex: true,
-    // useUnifiedTipology: true
-});
-
-
-//handling errors from db
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    console.log('Database connected!!!');
-});
-
-
+//          R O U T E S
+app.use('/', userRoutes);
 app.use('/campgrounds', campgroundsRoutes);
 app.use('/campgrounds/:id/reviews', reviewsRoutes);
-app.use('/', userRoutes);
+
 
 app.get('/', (request, response) => {
     response.render('home');
