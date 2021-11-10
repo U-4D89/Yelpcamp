@@ -9,6 +9,7 @@ My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/cou
 
 
 ### Made with 🔨
+ - ###### [dot env](https://www.npmjs.com/package/dotenv)
  - ###### [@mapbox/mapbox-sdk](https://www.npmjs.com/package/@mapbox/mapbox-sdk)
  - ###### [cloudinary](https://www.npmjs.com/package/cloudinary)
  - ###### [connect-flash](https://www.npmjs.com/package/connect-flash)
@@ -17,7 +18,7 @@ My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/cou
  - ###### [express](https://www.npmjs.com/package/express)
  - ###### [express-session](https://www.npmjs.com/package/express-session)
  - ###### [joi](https://www.npmjs.com/package/joi)
- - ###### [method-overide](https://www.npmjs.com/package/method-override)
+ - ###### [method-override](https://www.npmjs.com/package/method-override)
  - ###### [mongoose](https://www.npmjs.com/package/mongoose)
  - ###### [multer](https://www.npmjs.com/package/multer)
  - ###### [multer-storage-cloudinary](https://www.npmjs.com/package/multer-storage-cloudinary)
