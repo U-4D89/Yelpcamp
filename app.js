@@ -46,6 +46,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//for prevent mongo injection
+const mongoSanitize = require('express-mongo-sanitize')
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
+
 //flash messages, define types of messages
 const flash = require('connect-flash');
 app.use(flash());
@@ -78,6 +84,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
     console.log('Database connected!!!');
 });
+
 
 app.use('/campgrounds', campgroundsRoutes);
 app.use('/campgrounds/:id/reviews', reviewsRoutes);

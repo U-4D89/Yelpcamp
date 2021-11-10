@@ -16,7 +16,9 @@ module.exports.register  = async ( request, response, next ) => {
             if (err) return next(err);
 
             request.flash('success', 'Thanks for register, enjoy the Yelp Camp ;)');
+            //console.log(newUser)
             response.redirect('/campgrounds');
+           
         });
 
        
