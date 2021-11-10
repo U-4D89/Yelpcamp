@@ -11,9 +11,11 @@ const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 
+
 //forces put and delete methods
 const methodOverride =  require('method-override');
 app.use(methodOverride('_method'));
+
 
 //for add some js code on html
 const ejsMate = require('ejs-mate');
@@ -23,11 +25,13 @@ app.engine('ejs', ejsMate);
 //session
 const session = require('express-session');
 const sessionConfig = {
+    name: 'uwu',
     secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,
     cookie: {
-        httpOnly: true,
+        httpOnly: true,  //not accesible for https, useful for localhost
+        //secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -46,11 +50,65 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+//helmet 
+//Content Security Policy to prevent XSS
+const helmet = require('helmet');
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com",
+    "https://api.tiles.mapbox.com",
+    "https://api.mapbox.com",
+    "https://kit.fontawesome.com",
+    "https://cdnjs.cloudflare.com",
+    "https://cdn.jsdelivr.net",
+];
+
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com",
+    "https://stackpath.bootstrapcdn.com",
+    "https://api.mapbox.com",
+    "https://api.tiles.mapbox.com",
+    "https://fonts.googleapis.com",
+    "https://use.fontawesome.com",
+];
+
+const connectSrcUrls = [
+    "https://api.mapbox.com",
+    "https://*.tiles.mapbox.com",
+    "https://events.mapbox.com",
+];
+
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            childSrc: ["blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`, //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://images.unsplash.com",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
+
+
 //for prevent mongo injection
 const mongoSanitize = require('express-mongo-sanitize')
 app.use(mongoSanitize({
     replaceWith: '_'
-}))
+}));
+
 
 //flash messages, define types of messages
 const flash = require('connect-flash');
@@ -63,6 +121,7 @@ app.use( ( request, response, next ) => {
     next();
 })
 
+
 //paths for use in every place the folders views and public
 const path = require('path');
 app.set('view engine', 'ejs');
@@ -70,13 +129,17 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended:true }));
 
+
 //connecting with yelp-camp db
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/yelp-camp'), {
+//const databaseAtlas = process.env.DB_URL;
+const databaseLocal = 'mongodb://localhost:27017/yelp-camp'
+mongoose.connect(databaseLocal, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTipology: true
-};
+    // useCreateIndex: true,
+    // useUnifiedTipology: true
+});
+
 
 //handling errors from db
 const db = mongoose.connection;
