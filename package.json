@@ -1,5 +1,5 @@
 {
-  "name": "Yelpcamp",
+  "name": "yelpcamp",
   "version": "1.0.0",
   "description": "My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp/).",
   "main": "app.js",
@@ -28,7 +28,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js 3030"
   },
   "repository": {
     "type": "git",

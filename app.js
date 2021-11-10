@@ -2,7 +2,7 @@ if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-const port = process.argv[2];
+const port = process.env.PORT;
 
 const express = require('express');
 const path = require('path');
