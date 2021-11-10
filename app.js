@@ -22,7 +22,7 @@ const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
 
 //connecting with yelp-camp db
-const MongoDBStore = require("connect-mongo") (session);
+const MongoDBStore = require('connect-mongo')(session);
 const databaseAtlas = process.env.DB_URL;
 const databaseLocal = 'mongodb://localhost:27017/yelp-camp';
 
@@ -56,8 +56,12 @@ app.use(mongoSanitize({
 
 
 const secret = 'thisshouldbeabettersecret!';
-const store = new MongoDBStore({
-    url:databaseLocal,
+// app.use(session({
+//     secret: secret,
+//     store: MongoStore.create({ mongoUrl: databaseLocal })
+// }))
+const store = new MongoDBStore ({
+    url: databaseLocal,
     secret:'thisshouldbeabettersecret!',
     touchAfter: 24 * 60  * 60 //lazy udpate hours * minutes * seconds
 
@@ -70,7 +74,7 @@ store.on('error', function (e) {
 
 const sessionConfig = {
     store,
-    name: 'uwusessionuwu',
+    name: 'session',
     secret,
     resave: false,
     saveUninitialized: true,
