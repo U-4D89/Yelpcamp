@@ -167,7 +167,7 @@ app.all('*', (request, response, next) => {
 
 app.use( (err, request, response, next) => {
     const { statusCode = 500 } = err;
-    if(!err.message) err.message = 'Something went wrong mate!'
+    if(!err.message) err.message = 'Something went wrong!'
     response.status(statusCode).render('error', { err }); 
 })
 

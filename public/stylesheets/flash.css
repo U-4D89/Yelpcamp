@@ -1,0 +1,13 @@
+#error-container, #success-container { 
+
+    z-index: 3;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+a { 
+    color: #721c24;
+    text-decoration: none;  
+}
+

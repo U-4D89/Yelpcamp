@@ -8,41 +8,28 @@
                 <br>
                 <h5 class="card-title" style=" padding-left: 1rem; "> Register </h5>
                 <div class="card-body">
-                    <form action="/register" class="row g-3 needs-validation" novalidate method="POST">
+                    <form action="/register" class="row g-3 validated-form" id="form" novalidate method="POST">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
+                            <label class="form-label" for="username">Username<sup>*</sup></label>
                             <input class="form-control" type="text" id="username" name="username" required autofocus>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
+                        </div>
                     
-                            <div id="validationUserFeedback" class="invalid-feedback">
-                              *Please provide a username.
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email<sup>*</sup></label>
+                            <input class="form-control" type="email" id="email" name="email" required>
+                            <div class="valid-feedback">
+                                Looks good!
                             </div>
                         </div>
                     
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email </label>
-                            <input class="form-control" type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                            <label class="form-label" for="password">Password<sup>*</sup></label>
+                            <input class="form-control" type="password" id="password" name="password" required>
                             <div class="valid-feedback">
                                 Looks good!
-                            </div>
-                    
-                            <div id="validationemailFeedback" class="invalid-feedback">
-                                *Please provide a valid email, remember follow this order:
-                                 yourname@yourmail.*** (three or two characters)
-                            </div>
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password </label>
-                            <input class="form-control" type="password" id="password" name="password" pattern=".{7,}" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                    
-                            <div id="validationemailFeedback" class="invalid-feedback">
-                                *Please provide a valid password, must conatain seven(7) or more characters.
                             </div>
                         </div>
                     
@@ -52,6 +39,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function validateEmail(){
+            let email = document.querySelector('#email').value;
+            let field = document.querySelector('#textValidation');
+            const pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/;
+            if ( !email.match(pattern) ) {
+            
+                field.classList.add('invalid');
+                field.classList.remove('valid');
+            }else{
+                field.classList.add('valid')
+                field.classList.remove('invalid');
+            }
+        }
+
+    </script>
 </div>
 
 
+<!-- https://www.youtube.com/watch?v=HzJngc-Se9Q&t=207s&ab_channel=OnlineTutorials -->

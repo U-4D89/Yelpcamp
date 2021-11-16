@@ -8,29 +8,23 @@
                 <br>
                 <h5 class="card-title" style=" padding-left: 1rem; "> Log in </h5>
                 <div class="card-body">
-                        <form action="/login" class="row g-3 needs-validation" novalidate method="POST">
+                        <form action="/login" class="row g-3 validated-form" novalidate method="POST" id="form">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="username" class="form-label">Username<sup>*</sup></label>
                                 <input class="form-control" type="text" id="username" name="username" required autofocus>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
-                        
-                                <div id="validationUserFeedback" class="invalid-feedback">
-                                *Please provide a valid username.
-                                </div>
                             </div>
                         
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password </label>
+                                <label for="password" class="form-label">Password<sup>*</sup></label>
                                 <input class="form-control" type="password" id="password" name="password" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                         
-                                <div id="validationemailFeedback" class="invalid-feedback">
-                                    *Please provide a valid password.
-                                </div>
+                                
                             </div>
                             <button class="btn btn-dark btn-block">Login</button>
                         </form> 

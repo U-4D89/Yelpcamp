@@ -7,3 +7,8 @@
     height: 570px;
     width: 100%;
 }
+
+sup { 
+    color: red;
+    font-weight: bolder;
+}

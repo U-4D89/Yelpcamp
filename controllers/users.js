@@ -10,14 +10,30 @@ module.exports.register  = async ( request, response, next ) => {
 
     try {
         const { email, username, password } = request.body;
+        const emailPattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/;
+        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,14}$/;
+        
+        if ( !email.match(emailPattern)) {
+            request.flash('error', 'Invalid email.');
+            response.redirect('/register');
+        }
+
+        if (!password.match(passwordPattern)) {
+            request.flash('error', 'Invalid password');
+            response.redirect('/register');
+        }
+
         const newUser = new User({ email, username });
         const registeredUser =  await User.register(newUser, password);
+
         request.logIn(registeredUser, err => {
             if (err) return next(err);
 
+
             request.flash('success', 'Thanks for register, enjoy the Yelp Camp ;)');
-            //console.log(newUser)
+            // console.log(newUser)
             response.redirect('/campgrounds');
+            console.log('SUCCESS!')
            
         });
 
@@ -42,6 +58,7 @@ module.exports.logIn = ( request, response ) => {
 
 module.exports.logOut = ( request, response ) => {
     request.logOut();
-    request.flash('sucess', 'Session closed!!');
+    request.flash('success', 'Session closed!!');
+    console.log('SUCCESS')
     response.redirect('/campgrounds');
 }
