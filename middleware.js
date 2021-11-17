@@ -19,7 +19,9 @@ module.exports.validateCampground = ( request, response, next ) => {
     const { error } = campgroundSchema.validate(request.body);
     if (error){
         const msg = error.details.map( el => el.message ).join(',');
-        throw new ExpressError(msg, 400);
+        const msgSlice = (msg.slice(12));
+        const finalMsg = (`"${msgSlice}.`);
+        throw new ExpressError(finalMsg, 400);
     } else {
         next();
     }

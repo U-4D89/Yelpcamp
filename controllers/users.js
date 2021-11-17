@@ -11,15 +11,15 @@ module.exports.register  = async ( request, response, next ) => {
     try {
         const { email, username, password } = request.body;
         const emailPattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/;
-        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,14}$/;
+        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
         
         if ( !email.match(emailPattern)) {
             request.flash('error', 'Invalid email.');
             response.redirect('/register');
         }
 
-        if (!password.match(passwordPattern)) {
-            request.flash('error', 'Invalid password');
+        if (!password.match(passwordPattern) || !password.length > 8) {
+            request.flash('error', 'Invalid password.');
             response.redirect('/register');
         }
 
