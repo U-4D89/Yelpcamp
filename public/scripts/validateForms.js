@@ -1,4 +1,4 @@
-import bsCustomFileInput from "bs-custom-file-input"
+//import bsCustomFileInput from "bs-custom-file-input"
 
 (function () {
     'use strict'

@@ -3,9 +3,7 @@ const ExpressError = require('./utils/ExpressError');
 const Campground = require('./models/campground');
 const Review = require('./models/review');
 
-
 module.exports.isLoggedIn = ( request, response, next ) => {
-    //request.user
     if(!request.isAuthenticated()) {
         request.session.returnTo = request.originalUrl;
         request.flash('error', 'You must be signed in.');
@@ -45,7 +43,9 @@ module.exports.validateReview = ( request, response, next ) => {
     //console.log(request.body)
     if (error) {
         const msg = error.details.map( el => el.message ).join(',');
-        throw new ExpressError(msg, 400);
+        const msgSlice = (msg.slice(12));
+        const finalMsg = (`"${msgSlice}.`);
+        throw new ExpressError(msg, finalMsg);
     } else {
         next();
     }

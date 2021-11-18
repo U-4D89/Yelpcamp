@@ -11,17 +11,28 @@ module.exports.register  = async ( request, response, next ) => {
     try {
         const { email, username, password } = request.body;
         const emailPattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/;
-        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]*$/;
+
+        if ( username.length <= 3 ) {    
+            request.flash('error', 'Your name is too short.');
+            response.redirect('/register');
+        }
         
         if ( !email.match(emailPattern)) {
             request.flash('error', 'Invalid email.');
             response.redirect('/register');
         }
 
-        if (!password.match(passwordPattern) || !password.length > 8) {
+        if ( password.length < 8 ) {
+            request.flash('error', 'That password is too short :(.');
+            response.redirect('/register');
+        }
+
+        if ( !password.match(passwordPattern) ) {
             request.flash('error', 'Invalid password.');
             response.redirect('/register');
         }
+        
 
         const newUser = new User({ email, username });
         const registeredUser =  await User.register(newUser, password);
@@ -31,7 +42,6 @@ module.exports.register  = async ( request, response, next ) => {
 
 
             request.flash('success', 'Thanks for register, enjoy the Yelp Camp ;)');
-            // console.log(newUser)
             response.redirect('/campgrounds');
             console.log('SUCCESS!')
            
