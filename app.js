@@ -21,9 +21,9 @@ const reviewsRoutes = require('./routes/reviews');
 
 //connecting with yelp-camp db
 const MongoDBStore = require('connect-mongo')(session);
-const databaseLocal = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const database = 'mongodb://localhost:27017/yelp-camp'; //|| process.env.DB_URL ;
 
-mongoose.connect(databaseLocal, {
+mongoose.connect(database, {
     useNewUrlParser: true,
     // useCreateIndex: true,
     // useUnifiedTipology: true
@@ -55,7 +55,7 @@ app.use(mongoSanitize({
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 const store = new MongoDBStore ({
-    url: databaseLocal,
+    url: database,
     secret,
     touchAfter: 24 * 60  * 60 //lazy udpate hours * minutes * seconds
 

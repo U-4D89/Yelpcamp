@@ -15,7 +15,7 @@ module.exports.register  = async ( request, response, next ) => {
 
         if ( username.length <= 3 ) {    
             request.flash('error', 'Your name is too short.');
-            response.redirect('/register');
+            response.redirect('/register');         
         }
         
         if ( !email.match(emailPattern)) {
@@ -39,8 +39,6 @@ module.exports.register  = async ( request, response, next ) => {
 
         request.logIn(registeredUser, err => {
             if (err) return next(err);
-
-
             request.flash('success', 'Thanks for register, enjoy the Yelp Camp ;)');
             response.redirect('/campgrounds');
             console.log('SUCCESS!')
@@ -52,8 +50,9 @@ module.exports.register  = async ( request, response, next ) => {
         request.flash('error', e.message);
         response.redirect('/register');
     }
-   
-};
+
+}
+
 
 module.exports.loginForm =  ( request, response ) => {
     response.render('users/login');
@@ -69,6 +68,15 @@ module.exports.logIn = ( request, response ) => {
 module.exports.logOut = ( request, response ) => {
     request.logOut();
     request.flash('success', 'Session closed!!');
-    console.log('SUCCESS')
     response.redirect('/campgrounds');
 }
+
+
+
+// const notModify = function( req, res, next ) {
+        
+//     res.statusCode = 404;
+//     res.setHeader('Content-Type', 'text/plain');
+//     res.end('Cannot ' + req.method + ' ' + req.url);
+//     next();
+// }

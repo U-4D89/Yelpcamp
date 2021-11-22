@@ -60,7 +60,7 @@ module.exports.editCampground = async (request, response) => {
 
 module.exports.updateCampground = async (request, response) => {
     const { id } = request.params;
-    console.log('ID CAMPGROUND!!', id)
+    //console.log('ID CAMPGROUND!!', id)
     const campground = await Campground.findByIdAndUpdate(id, { ...request.body.campground });
     const imgs = request.files.map( f => ({ url: f.path, filename: f.filename }))
     campground.images.push( ...imgs );
