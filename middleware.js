@@ -20,6 +20,8 @@ module.exports.validateCampground = ( request, response, next ) => {
         const msgSlice = (msg.slice(12));
         const finalMsg = (`"${msgSlice}.`);
         throw new ExpressError(finalMsg, 400);
+        // request.flash('error', finalMsg);
+        // response.redirect('campgrounds/new')
     } else {
         next();
     }

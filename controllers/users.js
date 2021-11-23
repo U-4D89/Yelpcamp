@@ -9,11 +9,12 @@ module.exports.registerForm =  ( request, response ) => {
 module.exports.register  = async ( request, response, next ) => {
 
     try {
+        //console.log(event)
         const { email, username, password } = request.body;
         const emailPattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/;
         const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]*$/;
 
-        if ( username.length <= 3 ) {    
+        if ( username.length < 3 ) {    
             request.flash('error', 'Your name is too short.');
             response.redirect('/register');         
         }
@@ -39,9 +40,10 @@ module.exports.register  = async ( request, response, next ) => {
 
         request.logIn(registeredUser, err => {
             if (err) return next(err);
+
             request.flash('success', 'Thanks for register, enjoy the Yelp Camp ;)');
             response.redirect('/campgrounds');
-            console.log('SUCCESS!')
+            //console.log('SUCCESS!')
            
         });
 
@@ -70,13 +72,3 @@ module.exports.logOut = ( request, response ) => {
     request.flash('success', 'Session closed!!');
     response.redirect('/campgrounds');
 }
-
-
-
-// const notModify = function( req, res, next ) {
-        
-//     res.statusCode = 404;
-//     res.setHeader('Content-Type', 'text/plain');
-//     res.end('Cannot ' + req.method + ' ' + req.url);
-//     next();
-// }

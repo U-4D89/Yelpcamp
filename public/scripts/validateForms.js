@@ -1,9 +1,9 @@
-//import bsCustomFileInput from "bs-custom-file-input"
+import bsCustomFileInput from "bs-custom-file-input"
 
 (function () {
     'use strict'
 
-    //bsCustomFileInput.init()
+    bsCustomFileInput.init()
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('#form')
@@ -12,7 +12,7 @@
     Array.from(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
+                if ( !form.checkValidity() ) {
                     event.preventDefault()
                     event.stopPropagation()
                 }

@@ -3,8 +3,7 @@
         <main>
             <h1 class="text-center">Editing campground</h1>
             <div class="col-6 offset-3">
-                <!-- /campgrounds/61831923c29cb9256c41fc12/edit
-                /campgrounds/<%=campground._id%>?_method=PUT" -->
+         
                 <form action="/campgrounds/<%= campground._id %>?_method=PUT " method="POST" novalidate class="validated-form" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label" for="title">Title <sup> *</sup></label>
