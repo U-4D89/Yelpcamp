@@ -1,8 +1,7 @@
 # Yelpcamp
 
----
 My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp/).
-
+---
 
 ### Pre-requirements 📝
 - [Node js](https://nodejs.org/en/download/).
