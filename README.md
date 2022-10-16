@@ -1,12 +1,5 @@
-             _                                 
-            | |                                
-  _   _  ___| |_ __   ___ __ _ _ __ ___  _ __  
- | | | |/ _ \ | '_ \ / __/ _` | '_ ` _ \| '_ \ 
- | |_| |  __/ | |_) | (_| (_| | | | | | | |_) |
-  \__, |\___|_| .__/ \___\__,_|_| |_| |_| .__/ 
-   __/ |      | |                       | |    
-  |___/       |_|                       |_|    
-  
+# Yelpcamp
+
 ---
 My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp/).
 
