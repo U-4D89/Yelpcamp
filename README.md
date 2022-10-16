@@ -2,7 +2,6 @@
 My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp/).
 
 
-
 ---
 ### Pre-requirements 📝
 - [Node js](https://nodejs.org/en/download/).
@@ -13,7 +12,11 @@ My version of yelpcamp of [the web developer bootcamp](https://www.udemy.com/cou
 > In the "package.json" you can see all dependecies :)
  
 
-### Installation 🔧
-Any of these packages can be installed by this way:
-
-``` npm install ``` or ``` npm i```.
+### Instalation 🔧
+ - project in your machine
+    - ```git clone https://github.com/U-4D89/Yelpcamp.git```
+ - dependencies
+    - ```npm install```
+    
+### How to run? 🚗🌫
+ ```npm start```
